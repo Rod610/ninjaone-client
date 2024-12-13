@@ -50,8 +50,8 @@ npm install cors --save
 ```bash 
 import cors from "cors"
 ``` 
-and     
+  and     
 ```bash 
 app.use(cors());
 ``` 
-to the `index.js` file.
+  to the `index.js` file.
