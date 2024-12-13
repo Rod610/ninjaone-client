@@ -45,7 +45,7 @@ VITE_APP_DEVICES_TASK_API_URL=http://localhost:3000
         ```bash 
         app.use(cors());
         ``` 
-        to the `index.js` file;
+        to the `index.js` file.
 
 
 The app will be available at `http://localhost:3001`.
