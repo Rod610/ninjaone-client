@@ -32,8 +32,20 @@ VITE_APP_DEVICES_TASK_API_URL=http://localhost:3000
 4. Please be sure you are running your api locally at port `3000`.
 
 5. If a `cors` issue is appear for http request:
-    - run `npm install cors --save` on the api
-    - add `import cors from "cors"` and `app.use(cors());` to the `index.js` file;
+    - run on the api:
+        ```bash 
+        npm install cors --save
+        ``` 
+    - add 
+        ```bash 
+        import cors from "cors"
+        ``` 
+        and 
+    
+        ```bash 
+        app.use(cors());
+        ``` 
+        to the `index.js` file;
 
 
 The app will be available at `http://localhost:3001`.
