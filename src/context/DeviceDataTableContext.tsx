@@ -10,7 +10,6 @@ const DeviceDataTableContext = createContext<IDeviceDataTableContext | undefined
 const sortOptions = generateSortOptions();
 
 export const DeviceDataTableProvider: FC<{ children: ReactNode }> = ({ children }) => {
-
   const [search, setSearch] = useState("");
   const [deviceType, setDeviceType] = useState(devicesTypes[0]);
   const [sortOption, setSortOption] = useState(sortOptions[0]);

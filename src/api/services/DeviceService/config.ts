@@ -3,5 +3,5 @@ export const DeviceEnpoints = {
   getDevice: (id: string) => `devices/${id}`,
   deleteDevice: (id: string) => `devices/${id}`,
   postDevices: () => "devices",
-  putDevice: (id: string) => `devices/${id}`,
+  putDevice: (id: string) => `devices/${id}`
 };

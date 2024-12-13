@@ -17,13 +17,13 @@ const DataTable = () => {
         search,
         deviceType: deviceType.value,
         sortOptionOrder: sortOption.orderValue,
-        sortOptionProperty: sortOption.propertyName,
-      }),
+        sortOptionProperty: sortOption.propertyName
+      })
   });
 
   return (
     <div>
-      <TableActions refetch={refetch}/>
+      <TableActions refetch={refetch} />
       <Table devices={data} isPending={isPending} />
     </div>
   );

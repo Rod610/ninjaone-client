@@ -1,28 +1,16 @@
 import { FC, useState } from "react";
 
-import { useDeleteDevice } from "../../../../api/services/DeviceService/mutation";
 import { IDevice } from "../../../../types/devices.types";
 import DeleteDeviceModal from "../../DeleteDeviceModal";
+import EditDeviceModal from "../../EditDeviceModal";
 
 import TableBody from "./TableBody";
 import TableBodySkeleton from "./TableBodySkeleton";
 
 const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ devices = [], isPending }) => {
-  const { mutate, isPending: isDeletePending } = useDeleteDevice();
-
   const [showDeleteDeviceModal, setDeleteDeviceModal] = useState(false);
   const [showEditDeviceModal, setEditDeviceModal] = useState(false);
   const [device, setDevice] = useState<IDevice | undefined>(undefined);
-
-  const onSubmitDelete = () => {
-    if (device) {
-      mutate(device.id, {
-        onSuccess: () => {
-          setDeleteDeviceModal(false);
-        },
-      });
-    }
-  };
 
   return (
     <div className="py-3">
@@ -49,13 +37,11 @@ const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ dev
       </table>
 
       {device ? (
-        <DeleteDeviceModal
-          show={showDeleteDeviceModal}
-          setShow={setDeleteDeviceModal}
-          onSubmit={onSubmitDelete}
-          device={device as IDevice}
-          isPending={isDeletePending}
-        />
+        <DeleteDeviceModal show={showDeleteDeviceModal} setShow={setDeleteDeviceModal} device={device as IDevice} />
+      ) : null}
+
+      {device ? (
+        <EditDeviceModal show={showEditDeviceModal} setShow={setEditDeviceModal} device={device as IDevice} />
       ) : null}
     </div>
   );

@@ -7,11 +7,11 @@ import {
   HDD_CAPACITY_MUST_BE_A_POSITIVE_NUMBER,
   HDD_CAPACITY_MUST_BE_AN_INTEGER,
   HDD_CAPACITY_REQUIRED,
-  SYSTEM_NAME_REQUIRED,
+  SYSTEM_NAME_REQUIRED
 } from "../../constants/labels";
 import { capitalize } from "../capitalize";
 
-export const addDeviceValidationSchema = Yup.object().shape({
+export const DeviceFormValidationSchema = Yup.object().shape({
   system_name: Yup.string().required(SYSTEM_NAME_REQUIRED),
   type: Yup.string()
     .oneOf(
@@ -23,5 +23,5 @@ export const addDeviceValidationSchema = Yup.object().shape({
     .typeError(HDD_CAPACITY_MUST_BE_A_NUMBER)
     .integer(HDD_CAPACITY_MUST_BE_AN_INTEGER)
     .positive(HDD_CAPACITY_MUST_BE_A_POSITIVE_NUMBER)
-    .required(HDD_CAPACITY_REQUIRED),
+    .required(HDD_CAPACITY_REQUIRED)
 });

@@ -8,14 +8,14 @@ export default class DeviceService {
   public static readonly getDevices = (): Promise<{ data: IDevice[] }> => {
     return axiosClient({
       url: DeviceEnpoints.getDevices(),
-      method: HTTP_METHODS.GET,
+      method: HTTP_METHODS.GET
     });
   };
 
   public static readonly getDeviceById = (id: string): Promise<{ data: IDevice }> => {
     return axiosClient({
       url: DeviceEnpoints.getDevice(id),
-      method: HTTP_METHODS.GET,
+      method: HTTP_METHODS.GET
     });
   };
 
@@ -23,7 +23,7 @@ export default class DeviceService {
     return axiosClient({
       url: DeviceEnpoints.postDevices(),
       method: HTTP_METHODS.POST,
-      data,
+      data
     });
   };
 
@@ -31,14 +31,14 @@ export default class DeviceService {
     return axiosClient({
       url: DeviceEnpoints.putDevice(id),
       method: HTTP_METHODS.PUT,
-      data,
+      data
     });
   };
 
   public static readonly deleteDevices = (id: string): Promise<IDevice> => {
     return axiosClient({
       url: DeviceEnpoints.deleteDevice(id),
-      method: HTTP_METHODS.DELETE,
+      method: HTTP_METHODS.DELETE
     });
   };
 }

@@ -2,13 +2,13 @@ export enum deviceType {
   Windows = "WINDOWS",
   Mac = "MAC",
   Linux = "LINUX",
-  None = "",
+  None = ""
 }
 
 export interface IDeviceForm {
   system_name: string;
   type: deviceType;
-  hdd_capacity: string | number;
+  hdd_capacity: string;
 }
 
 export interface IDevice {

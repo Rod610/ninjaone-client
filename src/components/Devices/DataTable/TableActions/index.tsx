@@ -9,7 +9,7 @@ import SearchBar from "./SearchBar";
 import SortBy from "./SortBy";
 
 const TableActions: FC<{ refetch: (options?: RefetchOptions) => Promise<QueryObserverResult<IDevice[], Error>> }> = ({
-  refetch,
+  refetch
 }) => {
   return (
     <div className="flex flex-row justify-between">

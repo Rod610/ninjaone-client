@@ -8,7 +8,7 @@ interface Property {
 const properties: Property[] = [
   { label: "HDD Capacity", name: "hdd_capacity" },
   { label: "Type", name: "type" },
-  { label: "Name", name: "system_name" },
+  { label: "Name", name: "system_name" }
 ];
 
 export const generateSortOptions = (): sortOption[] => {
@@ -22,14 +22,14 @@ export const generateSortOptions = (): sortOption[] => {
         propertyLabel: property.label,
         propertyName: property.name,
         orderLabel: "Descending",
-        orderValue: "desc",
+        orderValue: "desc"
       },
       {
         id: id++,
         propertyLabel: property.label,
         propertyName: property.name,
         orderLabel: "Ascending",
-        orderValue: "asc",
+        orderValue: "asc"
       }
     );
   });

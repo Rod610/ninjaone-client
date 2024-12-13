@@ -3,7 +3,11 @@ import { IDeviceQuery } from "../types/query.types";
 
 const filterBySearch = (data: IDevice[], search: string) => {
   const searchInLowerCase = search.toLocaleLowerCase();
-  return data.filter((device) => device.system_name.toLocaleLowerCase().includes(searchInLowerCase) || device.hdd_capacity.toString() === searchInLowerCase);
+  return data.filter(
+    (device) =>
+      device.system_name.toLocaleLowerCase().includes(searchInLowerCase) ||
+      device.hdd_capacity.toString() === searchInLowerCase
+  );
 };
 
 const filterByType = (data: IDevice[], type: string) => {

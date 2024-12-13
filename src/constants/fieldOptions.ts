@@ -6,7 +6,7 @@ export const deviceFields = [
     testId: "system_name",
     errorTestId: "system_name_error",
     placeholder: "",
-    label: "System name *",
+    label: "System name *"
   },
   {
     type: "select",
@@ -15,7 +15,7 @@ export const deviceFields = [
     testId: "type",
     errorTestId: "type_error",
     placeholder: "Select type",
-    label: "Device type *",
+    label: "Device type *"
   },
   {
     type: "text",
@@ -24,6 +24,6 @@ export const deviceFields = [
     testId: "hdd_capacity",
     errorTestId: "hdd_capacity_error",
     placeholder: "",
-    label: "HDD capacity (GB) *",
+    label: "HDD capacity (GB) *"
   }
 ];

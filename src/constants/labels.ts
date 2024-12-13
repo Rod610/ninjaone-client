@@ -1,6 +1,7 @@
 //labels
 export const ADD_DEVICE_LABEL = "Add device";
 export const DELETE_DEVICE_LABEL = "Delete device?";
+export const EDIT_DEVICE_LABEL = "Edit device";
 export const SUBMIT_LABEL = "Submit";
 export const CANCEL_LABEL = "Cancel";
 export const CLOSE_LABEL = "Close";
@@ -18,5 +19,5 @@ export const DEVICE_TYPE_REQUIRED = "Device type is required";
 export const SYSTEM_NAME_REQUIRED = "System name is required";
 
 //legends
-export const DELETE_LEGEND_LABEL_FIRST = "You are about to delete the device"
+export const DELETE_LEGEND_LABEL_FIRST = "You are about to delete the device";
 export const DELETE_LEGEND_LABEL_SECOND = ". This action cannot be undone.";

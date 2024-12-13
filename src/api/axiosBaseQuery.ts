@@ -6,8 +6,8 @@ const axiosClient = axios.create({
   headers: {
     Accept: "application/json",
     // eslint-disable-next-line no-useless-escape
-    timezone: new Date().toString().match(/([-\+][0-9]+)\s/)![1],
-  },
+    timezone: new Date().toString().match(/([-\+][0-9]+)\s/)![1]
+  }
 });
 
 const onRequest = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig<unknown> => {
