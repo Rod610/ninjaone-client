@@ -29,7 +29,17 @@ pnpm install
 VITE_APP_DEVICES_TASK_API_URL=http://localhost:3000
 ```
 
+4. Start the development server:
+
+```bash
+pnpm run dev
+```
+
 Please be sure you are running your api locally at port `3000`.
+
+The app will be available at `http://localhost:3001`.
+
+# Troubleshooting
 
 If a `cors` issue is appear for http request:
 - run on the api:
@@ -45,6 +55,3 @@ and
 app.use(cors());
 ``` 
 to the `index.js` file.
-
-
-The app will be available at `http://localhost:3001`.
