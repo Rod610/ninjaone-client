@@ -12,7 +12,7 @@ type ButtonProps = {
 
 const Button: FC<ButtonProps> = ({ variant = "primary", disabled = false, onClick, children, className, ...props }) => {
   const buttonClassNames = classNames(
-    "border rounded-md p-2 min-w-20 flex justify-center items-center",
+    "border rounded p-2 min-w-20 flex justify-center items-center",
     `bg-${variant}`,
     className
   );

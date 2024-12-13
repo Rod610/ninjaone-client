@@ -9,7 +9,7 @@ const RefreshButton: FC<{ onClick: (options?: RefetchOptions) => Promise<QueryOb
   onClick
 }) => {
   return (
-    <button type="button" onClick={() => onClick()} className="rounded-md bg-white text-gray-400 hover:text-gray-500">
+    <button type="button" onClick={() => onClick()} className="rounded bg-white active:bg-slate-100 p-2">
       <span className="sr-only">{REFRESH_LABEL}</span>
       <RefreshIcon aria-hidden="true" className="size-6" />
     </button>

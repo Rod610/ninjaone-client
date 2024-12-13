@@ -100,11 +100,11 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
 
                 <div className="py-3 flex flex-row justify-end space-x-2">
                   <Button
-                    className="text-black"
+                    className="text-black active:bg-slate-100"
                     variant="secondary"
                     role="button"
                     name="Submit"
-                    type="submit"
+                    type="button"
                     onClick={() => setShow(false)}
                   >
                     {CANCEL_LABEL}
@@ -115,7 +115,7 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
                     name="Submit"
                     type="submit"
                     disabled={isPending}
-                    className="text-white"
+                    className="text-white active:bg-cyan-800"
                   >
                     {isPending ? (
                       <>
