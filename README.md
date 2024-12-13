@@ -1,3 +1,4 @@
+# NinjaOne React Developer Showcase
 This is a web application for the showcase of NinjaOne
 
 # Installing dependencies
