@@ -41,8 +41,8 @@ The app will be available at `http://localhost:3001`.
 
 # Troubleshooting
 
-If a `cors` issue is appear for http request:
-- run on the api:
+If a `cors` issue appear for http requests:
+- run on the api the following command:
 ```bash 
 npm install cors --save
 ``` 
