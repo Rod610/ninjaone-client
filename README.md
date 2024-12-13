@@ -1,50 +1,38 @@
-# React + TypeScript + Vite
+This is a web application for the showcase of NinjaOne
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Installing dependencies
 
-Currently, two official plugins are available:
+If you are using docker, you can run the following command:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm run docker:watch
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+If you are NOT using docker:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. Please, be sure you have `pnpm` installed:
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm install -g pnpm
 ```
+
+2. Install dependencies:
+
+```bash
+pnpm install
+```
+
+3. Add the environment variable, create a `.env` in the root with the following values:
+
+```bash
+VITE_APP_DEVICES_TASK_API_URL=http://localhost:3000
+```
+
+4. Please be sure you are running your api locally at port `3000`.
+
+5. If a `cors` issue is appear for http request:
+    - run `npm install cors --save` on the api
+    - add `import cors from "cors"` and `app.use(cors());` to the `index.js` file;
+
+
+The app will be available at `http://localhost:3001`.

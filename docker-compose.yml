@@ -4,6 +4,8 @@ services:
     container_name: ninjaone-client
     ports:
       - "3001:3001"
+    environment:
+      - VITE_APP_DEVICES_TASK_API_URL=http://localhost:3000  
     develop:
       watch:
         - action: sync
