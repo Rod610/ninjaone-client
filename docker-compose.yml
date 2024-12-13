@@ -1,0 +1,18 @@
+services:
+  website:
+    build: ./
+    container_name: ninjaone-client
+    ports:
+      - "3001:3001"
+    develop:
+      watch:
+        - action: sync
+          path: ./
+          target: /usr/src/ninjaone-client/
+          ignore:
+            - node_modules/
+        - action: rebuild
+          path: package.json
+    volumes:
+      - ./:/usr/src/ninjaone-client/
+      - /usr/src/ninjaone-client/node_modules
