@@ -1,37 +1,29 @@
-import { sortOption } from "../types/devices.types";
+import { v4 as uuidv4 } from "uuid";
 
-interface Property {
-  label: string;
-  name: string;
-}
+import { DeviceProperty, ISortOption } from "../types/devices.types";
 
-const properties: Property[] = [
-  { label: "HDD Capacity", name: "hdd_capacity" },
-  { label: "Type", name: "type" },
-  { label: "Name", name: "system_name" }
+const properties: DeviceProperty[] = [
+  { propertyLabel: "HDD Capacity", propertyName: "hdd_capacity" },
+  { propertyLabel: "Type", propertyName: "type" },
+  { propertyLabel: "Name", propertyName: "system_name" }
 ];
 
-export const generateSortOptions = (): sortOption[] => {
-  let id = 0;
-  const options: sortOption[] = [];
-
-  properties.forEach((property) => {
-    options.push(
+export const generateSortOptions = (): ISortOption[] => {
+  const options: ISortOption[] = properties.flatMap((property) => {
+    return [
       {
-        id: id++,
-        propertyLabel: property.label,
-        propertyName: property.name,
+        id: uuidv4(),
+        ...property,
         orderLabel: "Descending",
         orderValue: "desc"
       },
       {
-        id: id++,
-        propertyLabel: property.label,
-        propertyName: property.name,
+        id: uuidv4(),
+        ...property,
         orderLabel: "Ascending",
         orderValue: "asc"
       }
-    );
+    ];
   });
 
   return options;

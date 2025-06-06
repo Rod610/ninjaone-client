@@ -1,20 +1,17 @@
 import { FC } from "react";
 
-import { useAddDevice } from "../../../api/services/DeviceService/mutation";
+import { useDevices } from "../../../hooks/useDevices";
 import { IDeviceForm } from "../../../types/devices.types";
 
 import { AddDeviceModalProps } from "./types";
 import AddDeviceModalView from "./View";
 
 const AddDeviceModal: FC<AddDeviceModalProps> = ({ show, setShow }) => {
-  const { mutate, isPending } = useAddDevice();
+  const { isAdding: isPending, addDevice } = useDevices();
 
   const onSubmit = async (values: IDeviceForm) => {
-    mutate(values, {
-      onSuccess: () => {
-        setShow(false);
-      }
-    });
+    await addDevice(values);
+    setShow(false);
   };
 
   const handleOnChangeField = (

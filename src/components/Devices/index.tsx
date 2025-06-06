@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { DevicesProvider } from "../../context/DevicesContext";
+
 import AddDeviceModal from "./AddDeviceModal";
 import DataTable from "./DataTable";
 import Header from "./Header";
@@ -10,8 +12,10 @@ const Devices = () => {
   return (
     <div className="min-w-full">
       <Header setAddDeviceModal={setAddDeviceModal} />
-      <DataTable />
-      <AddDeviceModal show={showAddDeviceModal} setShow={setAddDeviceModal} />
+      <DevicesProvider>
+        <DataTable />
+        <AddDeviceModal show={showAddDeviceModal} setShow={setAddDeviceModal} />
+      </DevicesProvider>
     </div>
   );
 };

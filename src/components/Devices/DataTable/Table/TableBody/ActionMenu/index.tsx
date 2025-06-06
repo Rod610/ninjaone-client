@@ -3,21 +3,20 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 import OptionsIcon from "../../../../../../assets/ActionIcons/OptionsIcon.svg?react";
 
-type ActionMenuProps = {
-  setDevice: () => void;
+interface ActionMenuProps {
+  setDeviceId: () => void;
   setDeleteDeviceModal: React.Dispatch<React.SetStateAction<boolean>>;
   setEditDeviceModal: React.Dispatch<React.SetStateAction<boolean>>;
-};
+}
 
-const ActionMenu: FC<ActionMenuProps> = ({ setDevice, setDeleteDeviceModal, setEditDeviceModal }) => {
-  const openDeleteDeviceModal = () => {
-    setDevice();
-    setDeleteDeviceModal(true);
-  };
-
-  const openEditDeviceModal = () => {
-    setDevice();
-    setEditDeviceModal(true);
+const ActionMenu: FC<ActionMenuProps> = ({ setDeviceId, setDeleteDeviceModal, setEditDeviceModal }) => {
+  const openModal = (modalType: "edit" | "delete") => {
+    setDeviceId();
+    if (modalType === "edit") {
+      setEditDeviceModal(true);
+    } else if (modalType === "delete") {
+      setDeleteDeviceModal(true);
+    }
   };
 
   return (
@@ -34,7 +33,7 @@ const ActionMenu: FC<ActionMenuProps> = ({ setDevice, setDeleteDeviceModal, setE
           <a
             href="#"
             className="block px-3 py-1 text-sm/5 font-normal text-black font data-focus:bg-gray-50 data-focus:outline-hidden"
-            onClick={openEditDeviceModal}
+            onClick={() => openModal("edit")}
           >
             Edit
           </a>
@@ -43,7 +42,7 @@ const ActionMenu: FC<ActionMenuProps> = ({ setDevice, setDeleteDeviceModal, setE
           <a
             href="#"
             className="block px-3 py-1 text-sm/5 font-normal text-red-600 data-focus:bg-gray-50 data-focus:outline-hidden"
-            onClick={openDeleteDeviceModal}
+            onClick={() => openModal("delete")}
           >
             Delete
           </a>

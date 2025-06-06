@@ -28,11 +28,10 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
       <Formik
         validationSchema={validationSchema}
         initialValues={{
-          system_name: device.system_name,
-          type: device.type,
+          ...device,
           hdd_capacity: device.hdd_capacity as string
         }}
-        onSubmit={onSubmit}
+        onSubmit={(values) => onSubmit(device.id, values)}
         enableReinitialize
       >
         {(formik) => {

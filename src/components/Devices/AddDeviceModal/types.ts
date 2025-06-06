@@ -8,7 +8,7 @@ export type AddDeviceModalProps = {
 export type AddDeviceModalViewProps = {
   show: boolean;
   setShow: (show: boolean) => void;
-  isPending: boolean;
+  isPending?: boolean;
   handleOnChangeField: (
     e: { name: string; value: string },
     setFieldValue: (arg0: string, arg1: string) => void

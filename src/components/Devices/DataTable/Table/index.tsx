@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 
+import { useModalDevice } from "../../../../hooks/useModalDevice";
 import { IDevice } from "../../../../types/devices.types";
 import DeleteDeviceModal from "../../DeleteDeviceModal";
 import EditDeviceModal from "../../EditDeviceModal";
@@ -10,7 +11,8 @@ import TableBodySkeleton from "./TableBodySkeleton";
 const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ devices = [], isPending }) => {
   const [showDeleteDeviceModal, setDeleteDeviceModal] = useState(false);
   const [showEditDeviceModal, setEditDeviceModal] = useState(false);
-  const [device, setDevice] = useState<IDevice | undefined>(undefined);
+
+  const { device, getDevice } = useModalDevice();
 
   return (
     <div className="py-3">
@@ -28,7 +30,7 @@ const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ dev
           ) : (
             <TableBody
               devices={devices}
-              setDevice={setDevice}
+              getDevice={getDevice}
               setDeleteDeviceModal={setDeleteDeviceModal}
               setEditDeviceModal={setEditDeviceModal}
             />

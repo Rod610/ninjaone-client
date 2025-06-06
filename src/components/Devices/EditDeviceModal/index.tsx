@@ -1,31 +1,21 @@
 import { FC } from "react";
-import { useQuery } from "@tanstack/react-query";
 
-import { useEditDevice } from "../../../api/services/DeviceService/mutation";
-import DeviceQueryMethods from "../../../api/services/DeviceService/query";
-import { GET_DEVICE } from "../../../constants/queryKeys";
+import { useDevices } from "../../../hooks/useDevices";
+import { useModalDevice } from "../../../hooks/useModalDevice";
 import { IDevice, IDeviceForm } from "../../../types/devices.types";
 
 import { EditDeviceModalProps } from "./types";
 import EditDeviceModalView from "./View";
 
 const EditDeviceModal: FC<EditDeviceModalProps> = ({ show, setShow, device }) => {
-  const { data } = useQuery({
-    queryKey: [GET_DEVICE, device.id],
-    queryFn: () => DeviceQueryMethods.getDeviceById(device.id)
-  });
+  const { editDevice, isEditing } = useModalDevice();
+  const { refetch } = useDevices();
 
-  const { mutate, isPending } = useEditDevice();
+  const onSubmit = async (id: string, values: IDeviceForm) => {
+    await editDevice(id, values);
+    setShow(false);
 
-  const onSubmit = async (values: IDeviceForm) => {
-    mutate(
-      { id: device.id, data: values },
-      {
-        onSuccess: () => {
-          setShow(false);
-        }
-      }
-    );
+    await refetch();
   };
 
   const handleOnChangeField = (
@@ -37,16 +27,14 @@ const EditDeviceModal: FC<EditDeviceModalProps> = ({ show, setShow, device }) =>
 
   return (
     <>
-      {data ? (
-        <EditDeviceModalView
-          show={show}
-          setShow={setShow}
-          isPending={isPending}
-          onSubmit={onSubmit}
-          handleOnChangeField={handleOnChangeField}
-          device={data as IDevice}
-        />
-      ) : null}
+      <EditDeviceModalView
+        show={show}
+        setShow={setShow}
+        isPending={isEditing}
+        onSubmit={onSubmit}
+        handleOnChangeField={handleOnChangeField}
+        device={device as IDevice}
+      />
     </>
   );
 };

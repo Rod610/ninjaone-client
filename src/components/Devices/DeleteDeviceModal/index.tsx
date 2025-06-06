@@ -1,6 +1,5 @@
 import { FC } from "react";
 
-import { useDeleteDevice } from "../../../api/services/DeviceService/mutation";
 import {
   CANCEL_LABEL,
   DELETE_DEVICE_LABEL,
@@ -8,28 +7,22 @@ import {
   DELETE_LEGEND_LABEL_FIRST,
   DELETE_LEGEND_LABEL_SECOND
 } from "../../../constants/labels";
-import { IDevice } from "../../../types/devices.types";
+import { useDevices } from "../../../hooks/useDevices";
+import { useModalDevice } from "../../../hooks/useModalDevice";
+import { DeviceModalProps } from "../../../types/devices.types";
 import Button from "../../common/Button";
 import LoadingRing from "../../common/LoadingRing";
 import Modal from "../../common/Modal";
 
-type DeleteDeviceModalViewProps = {
-  show: boolean;
-  setShow: (show: boolean) => void;
-  device: IDevice;
-};
+const DeleteDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
+  const { deleteDevice, isDeleting } = useModalDevice();
+  const { refetch } = useDevices();
 
-const DeleteDeviceModal: FC<DeleteDeviceModalViewProps> = ({ show, setShow, device }) => {
-  const { mutate, isPending: isPending } = useDeleteDevice();
+  const onSubmitDelete = async () => {
+    await deleteDevice(device.id);
+    setShow(false);
 
-  const onSubmitDelete = () => {
-    if (device) {
-      mutate(device.id, {
-        onSuccess: () => {
-          setShow(false);
-        }
-      });
-    }
+    await refetch();
   };
 
   return (
@@ -55,11 +48,11 @@ const DeleteDeviceModal: FC<DeleteDeviceModalViewProps> = ({ show, setShow, devi
           role="button"
           name="Submit"
           type="submit"
-          disabled={isPending}
+          disabled={isDeleting}
           className="text-white active:bg-red-800"
           onClick={onSubmitDelete}
         >
-          {isPending ? (
+          {isDeleting ? (
             <>
               <LoadingRing />
               {DELETE_LABEL}
