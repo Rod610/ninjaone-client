@@ -8,10 +8,10 @@ import { ADD_DEVICE_LABEL, CANCEL_LABEL, SUBMIT_LABEL } from "../../../constants
 import { deviceType, IDeviceForm } from "../../../types/devices.types";
 import { capitalize } from "../../../utils/capitalize";
 import { DeviceFormValidationSchema as validationSchema } from "../../../utils/schemas/devices.schema";
-import Button from "../../common/Button";
-import LoadingRing from "../../common/LoadingRing";
-import Modal from "../../common/Modal";
-import SelectField from "../../common/SelectField";
+import Button from "../../shared/Button";
+import LoadingRing from "../../shared/LoadingRing";
+import Modal from "../../shared/Modal";
+import SelectField from "../../shared/SelectField";
 
 import { AddDeviceModalViewProps } from "./types";
 

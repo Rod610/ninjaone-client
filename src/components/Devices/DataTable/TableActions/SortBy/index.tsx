@@ -2,7 +2,7 @@ import { ListboxOption } from "@headlessui/react";
 
 import useDeviceDataTableContext from "../../../../../hooks/useDeviceDataTableContext";
 import { generateSortOptions } from "../../../../../utils/generateSortOptions";
-import SelectField from "../../../../common/SelectField";
+import SelectField from "../../../../shared/SelectField";
 
 const sortOptions = generateSortOptions();
 

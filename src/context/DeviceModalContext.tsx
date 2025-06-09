@@ -1,7 +1,8 @@
-import { createContext, FC, ReactNode, useCallback, useMemo, useState } from "react";
+import { createContext, FC, ReactNode, useCallback, useMemo, useRef, useState } from "react";
 
 import { deleteDevices, getDeviceById, putDevices } from "../api/services/DeviceService/service";
 import { IDevice, IDeviceForm } from "../types/devices.types";
+import { resetAbortController } from "../utils/abortController";
 
 import { IDeviceModalContext } from "./types";
 
@@ -13,33 +14,51 @@ export const DeviceModalProvider: FC<{ children: ReactNode }> = ({ children }) =
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [device, setDevice] = useState<IDevice | null>(null);
 
+  const fetchControllerRef = useRef<AbortController | null>(null);
+  const editControllerRef = useRef<AbortController | null>(null);
+  const deleteControllerRef = useRef<AbortController | null>(null);
+
   const editDevice = useCallback(async (id: string, device: IDeviceForm) => {
+
+    const controller = resetAbortController(editControllerRef);
+
     try {
       setIsEditing(true);
 
-      await putDevices(id, device);
+      await putDevices(id, device, {
+        signal: controller.signal
+      });
     } finally {
       setIsEditing(false);
     }
   }, []);
 
   const deleteDevice = useCallback(async (id: string) => {
+    const controller = resetAbortController(deleteControllerRef);
+
     try {
       setIsDeleting(true);
       setDevice(null);
 
-      await deleteDevices(id);
+      await deleteDevices(id, {
+        signal: controller.signal
+      });
     } finally {
       setIsDeleting(false);
     }
   }, []);
 
   const getDevice = useCallback(async (id: string) => {
+    const controller = resetAbortController(fetchControllerRef);
+
     try {
       setIsFetchingDevice(false);
       setDevice(null);
 
-      const data = await getDeviceById(id);
+      const data = await getDeviceById(id, {
+        signal: controller.signal
+      });
+
       setDevice(data);
     } finally {
       setIsFetchingDevice(true);

@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import PlusIcon from "../../../assets/ActionIcons/PlusIcon.svg?react";
 import { ADD_DEVICE_LABEL } from "../../../constants/labels";
-import Button from "../../common/Button";
+import Button from "../../shared/Button";
 
 type HeaderProps = {
   setAddDeviceModal: (show: boolean) => void;

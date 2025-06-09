@@ -1,7 +1,8 @@
-import { createContext, FC, ReactNode, useCallback, useEffect, useMemo, useState } from "react";
+import { createContext, FC, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { getDevices, postDevices } from "../api/services/DeviceService/service";
 import { IDevice, IDeviceForm } from "../types/devices.types";
+import { resetAbortController } from "../utils/abortController";
 import { mapDevices } from "../utils/mapDevices";
 
 import { IDevicesContext } from "./types";
@@ -14,11 +15,18 @@ export const DevicesProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const [data, setData] = useState<IDevice[]>([]);
 
+  const fetchControllerRef = useRef<AbortController | null>(null);
+  const addControllerRef = useRef<AbortController | null>(null);
+
   const getAllDevices = useCallback(async () => {
+    const controller = resetAbortController(fetchControllerRef);
+
     try {
       setIsFetching(true);
 
-      const data = await getDevices();
+      const data = await getDevices({
+        signal: controller.signal
+      });
       setData(data);
     } finally {
       setIsFetching(false);
@@ -27,10 +35,13 @@ export const DevicesProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   const addDevice = useCallback(
     async (device: IDeviceForm) => {
+      const controller = resetAbortController(addControllerRef);
       try {
         setIsAdding(true);
 
-        await postDevices(device);
+        await postDevices(device, {
+          signal: controller.signal
+        });
         await getAllDevices();
       } finally {
         setIsAdding(false);
@@ -41,6 +52,11 @@ export const DevicesProvider: FC<{ children: ReactNode }> = ({ children }) => {
 
   useEffect(() => {
     getAllDevices();
+
+    const controller = fetchControllerRef.current;
+    return () => {
+      controller?.abort();
+    };
   }, [getAllDevices]);
 
   const value = useMemo(

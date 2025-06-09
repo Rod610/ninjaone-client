@@ -10,9 +10,9 @@ import {
 import { useDevices } from "../../../hooks/useDevices";
 import { useModalDevice } from "../../../hooks/useModalDevice";
 import { DeviceModalProps } from "../../../types/devices.types";
-import Button from "../../common/Button";
-import LoadingRing from "../../common/LoadingRing";
-import Modal from "../../common/Modal";
+import Button from "../../shared/Button";
+import LoadingRing from "../../shared/LoadingRing";
+import Modal from "../../shared/Modal";
 
 const DeleteDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
   const { deleteDevice, isDeleting } = useModalDevice();

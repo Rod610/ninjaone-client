@@ -25,7 +25,12 @@ const interceptors: FetchInterceptor = {
     return [url, config];
   },
   onRequestError: (error) => {
-    console.error(`[request error]`, error);
+    if (error instanceof DOMException && error.name === "AbortError") {
+      console.warn("[request aborted]");
+      return;
+    }
+
+    console.error("[request error]", error);
   },
   onResponse: async <T>(response: Response): Promise<T> => {
     return await response.json();
@@ -104,10 +109,14 @@ const httpClient = async <TRequest, TResponse>(
     // Call the onResponse interceptor
     return interceptors.onResponse ? await interceptors.onResponse<TResponse>(response) : await response.json();
   } catch (error) {
-    // Call the onRequestError or onResponseError interceptor
+    const isAbortError = error instanceof DOMException && error.name === "AbortError";
+
     if (error instanceof Error) {
       interceptors.onRequestError?.(error);
-      interceptors.onResponseError?.(error);
+
+      if (!isAbortError) {
+        interceptors.onResponseError?.(error);
+      }
     }
 
     return Promise.reject(error);
