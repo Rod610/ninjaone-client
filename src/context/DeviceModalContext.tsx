@@ -1,35 +1,59 @@
-import { createContext, FC, ReactNode, useCallback, useMemo, useRef, useState } from "react";
+import { createContext, FC, ReactNode, useCallback, useMemo, useReducer, useRef } from "react";
 
 import { deleteDevices, getDeviceById, putDevices } from "../api/services/DeviceService/service";
 import { IDevice, IDeviceForm } from "../types/devices.types";
 import { resetAbortController } from "../utils/abortController";
 
-import { IDeviceModalContext } from "./types";
+import { Action, IDeviceModalContext, IDeviceModalInitialState } from "./types";
 
 const DeviceModalContext = createContext<IDeviceModalContext | undefined>(undefined);
 
+const initialState: IDeviceModalInitialState = {
+  isFetchingDevice: false,
+  isEditing: false,
+  isDeleting: false,
+  device: null
+};
+
+const reducer = (state: IDeviceModalInitialState, action: Action): IDeviceModalInitialState => {
+  switch (action.type) {
+    case "FETCHING_DEVICE":
+      return { ...state, isFetchingDevice: action.payload };
+    case "EDITING_DEVICE":
+      return { ...state, isEditing: action.payload };
+    case "DELETING_DEVICE":
+      return { ...state, isDeleting: action.payload };
+    case "SET_DEVICE":
+      return { ...state, device: action.payload };
+    default:
+      return state;
+  }
+};
+
 export const DeviceModalProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [isFetchingDevice, setIsFetchingDevice] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState<boolean>(false);
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [device, setDevice] = useState<IDevice | null>(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const { isFetchingDevice, isEditing, isDeleting, device } = state;
+
+  const setDevice = useCallback((device: IDevice | null) => {
+    dispatch({ type: "SET_DEVICE", payload: device });
+  }, []);
 
   const fetchControllerRef = useRef<AbortController | null>(null);
   const editControllerRef = useRef<AbortController | null>(null);
   const deleteControllerRef = useRef<AbortController | null>(null);
 
   const editDevice = useCallback(async (id: string, device: IDeviceForm) => {
-
     const controller = resetAbortController(editControllerRef);
 
     try {
-      setIsEditing(true);
+      dispatch({ type: "EDITING_DEVICE", payload: true });
 
       await putDevices(id, device, {
         signal: controller.signal
       });
     } finally {
-      setIsEditing(false);
+      dispatch({ type: "EDITING_DEVICE", payload: false });
     }
   }, []);
 
@@ -37,14 +61,14 @@ export const DeviceModalProvider: FC<{ children: ReactNode }> = ({ children }) =
     const controller = resetAbortController(deleteControllerRef);
 
     try {
-      setIsDeleting(true);
-      setDevice(null);
+      dispatch({ type: "DELETING_DEVICE", payload: true });
+      dispatch({ type: "SET_DEVICE", payload: null });
 
       await deleteDevices(id, {
         signal: controller.signal
       });
     } finally {
-      setIsDeleting(false);
+      dispatch({ type: "DELETING_DEVICE", payload: false });
     }
   }, []);
 
@@ -52,16 +76,16 @@ export const DeviceModalProvider: FC<{ children: ReactNode }> = ({ children }) =
     const controller = resetAbortController(fetchControllerRef);
 
     try {
-      setIsFetchingDevice(false);
-      setDevice(null);
+      dispatch({ type: "FETCHING_DEVICE", payload: true });
+      dispatch({ type: "SET_DEVICE", payload: null });
 
       const data = await getDeviceById(id, {
         signal: controller.signal
       });
 
-      setDevice(data);
+      dispatch({ type: "SET_DEVICE", payload: data });
     } finally {
-      setIsFetchingDevice(true);
+      dispatch({ type: "FETCHING_DEVICE", payload: false });
     }
   }, []);
 
