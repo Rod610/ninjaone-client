@@ -1,7 +1,5 @@
 import { DeviceModalProps, IDeviceForm } from "../../../types/devices.types";
 
-
-
 export interface EditDeviceModalViewProps extends DeviceModalProps {
   isPending: boolean;
   handleOnChangeField: (

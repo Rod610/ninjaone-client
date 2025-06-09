@@ -2,12 +2,11 @@ import { FC } from "react";
 
 import { useDevices } from "../../../hooks/useDevices";
 import { useModalDevice } from "../../../hooks/useModalDevice";
-import { IDevice, IDeviceForm } from "../../../types/devices.types";
+import { DeviceModalProps, IDevice, IDeviceForm } from "../../../types/devices.types";
 
-import { EditDeviceModalProps } from "./types";
 import EditDeviceModalView from "./View";
 
-const EditDeviceModal: FC<EditDeviceModalProps> = ({ show, setShow, device }) => {
+const EditDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
   const { editDevice, isEditing } = useModalDevice();
   const { refetch } = useDevices();
 
