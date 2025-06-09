@@ -38,20 +38,3 @@ pnpm run dev
 Please be sure you are running your api locally at port `3000`.
 
 The app will be available at `http://localhost:3001`.
-
-# Troubleshooting
-
-If a `cors` issue appear for http requests:
-- run on the api the following command:
-```bash 
-npm install cors --save
-``` 
-- add 
-```bash 
-import cors from "cors"
-``` 
-  and     
-```bash 
-app.use(cors());
-``` 
-  to the `index.js` file.
