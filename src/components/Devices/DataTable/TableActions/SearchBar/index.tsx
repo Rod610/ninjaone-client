@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 
 import SearchIcon from "../../../../../assets/ActionIcons/SearchIcon.svg?react";
-import useDeviceDataTableContext from "../../../../../hooks/useDeviceDataTableContext";
+import { useDevices } from "../../../../../hooks/useDevices";
+
 
 const SearchBar = () => {
-  const { setSearch } = useDeviceDataTableContext();
+  const { setSearch } = useDevices();
 
   const [inputValue, setInputValue] = useState("");
 

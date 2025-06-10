@@ -2,13 +2,12 @@ import { useMemo } from "react";
 
 import { filterByQuery } from "../utils/deviceFilters";
 
-import useDeviceDataTableContext from "./useDeviceDataTableContext";
-import useDeviceContext from "./useDevicesContext";
+import { useDevice } from "./useDevice";
+import { useDeviceDataTable } from "./useDeviceDataTable";
 
 export const useDevices = () => {
-  const { search, deviceType, sortOption } = useDeviceDataTableContext();
-
-  const { isFetching, isAdding, data, refetch, addDevice } = useDeviceContext();
+  const { search, deviceType, sortOption, setSearch, setDeviceType, setSortOption } = useDeviceDataTable();
+  const { isFetching, isAdding, data, refetch, addDevice } = useDevice();
 
   const filteredData = useMemo(() => {
     if (!data || data.length === 0) return [];
@@ -27,7 +26,12 @@ export const useDevices = () => {
     isFetching,
     isAdding,
     data: filteredData,
+    sortOption,
+    deviceType,
     refetch,
-    addDevice
+    addDevice,
+    setSearch,
+    setDeviceType,
+    setSortOption
   };
 };

@@ -1,13 +1,13 @@
 import { ListboxOption } from "@headlessui/react";
 
-import useDeviceDataTableContext from "../../../../../hooks/useDeviceDataTableContext";
+import { useDevices } from "../../../../../hooks/useDevices";
 import { generateSortOptions } from "../../../../../utils/generateSortOptions";
 import SelectField from "../../../../shared/SelectField";
 
 const sortOptions = generateSortOptions();
 
 const SortBy = () => {
-  const { sortOption, setSortOption } = useDeviceDataTableContext();
+  const { sortOption, setSortOption } = useDevices();
 
   return (
     <SelectField

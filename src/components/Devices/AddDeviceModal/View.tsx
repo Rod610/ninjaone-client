@@ -113,7 +113,7 @@ const AddDeviceModalView: FC<AddDeviceModalViewProps> = ({
                     role="button"
                     name="Submit"
                     type="submit"
-                    disabled={isPending}
+                    //disabled={isPending}
                     className="text-white active:bg-cyan-800"
                   >
                     {isPending ? (

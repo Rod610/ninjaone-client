@@ -1,11 +1,11 @@
 import { ListboxOption } from "@headlessui/react";
 
 import { devicesTypes } from "../../../../../constants/devicesTypes";
-import useDeviceDataTableContext from "../../../../../hooks/useDeviceDataTableContext";
+import { useDevices } from "../../../../../hooks/useDevices";
 import SelectField from "../../../../shared/SelectField";
 
 const DeviceType = () => {
-  const { deviceType, setDeviceType } = useDeviceDataTableContext();
+  const { deviceType, setDeviceType } = useDevices();
 
   return (
     <SelectField

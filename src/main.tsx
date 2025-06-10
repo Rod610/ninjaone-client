@@ -1,15 +1,16 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { Provider } from "react-redux";
 
-import { DeviceDataTableProvider } from "./context/DeviceDataTableContext.tsx";
+import { store } from "./state/store.ts";
 import App from "./App.tsx";
 
 import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <DeviceDataTableProvider>
-      <App />
-    </DeviceDataTableProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
   </StrictMode>
 );
