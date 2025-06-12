@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 
 import {
   CANCEL_LABEL,
@@ -7,22 +7,32 @@ import {
   DELETE_LEGEND_LABEL_FIRST,
   DELETE_LEGEND_LABEL_SECOND
 } from "../../../constants/labels";
-import { useDevices } from "../../../hooks/useDevices";
-import { useModalDevice } from "../../../hooks/useModalDevice";
+import { useDeviceModals } from "../../../hooks/useDeviceModals";
 import { DeviceModalProps } from "../../../types/devices.types";
+import { resetAbortController } from "../../../utils/abortController";
 import Button from "../../shared/Button";
 import LoadingRing from "../../shared/LoadingRing";
 import Modal from "../../shared/Modal";
 
 const DeleteDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
-  const { deleteDevice, isDeleting } = useModalDevice();
-  const { refetch } = useDevices();
+  const { deleteDevice, isDeleting } = useDeviceModals();
+
+  const deleteControllerRef = useRef<AbortController | null>(null);
 
   const onSubmitDelete = async () => {
-    await deleteDevice(device.id);
-    setShow(false);
+    const controller = resetAbortController(deleteControllerRef);
 
-    await refetch();
+    try {
+      await deleteDevice(device.id, { signal: controller.signal });
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
+
+      console.error("Failed to delete device:", error);
+    } finally {
+      setShow(false);
+    }
   };
 
   return (

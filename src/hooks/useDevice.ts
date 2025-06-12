@@ -17,11 +17,16 @@ export const useDevice = () => {
     [dispatch]
   );
 
+  const add = useCallback(
+    (device: IDeviceForm, { signal }: { signal?: AbortSignal }) => dispatch(addDevice(device, { signal })),
+    [dispatch]
+  );
+
   return {
     isFetching,
     isAdding,
     data: mapDevices(data),
     refetch,
-    addDevice: (device: IDeviceForm, { signal }: { signal?: AbortSignal }) => dispatch(addDevice(device, { signal }))
+    addDevice: add
   };
 };

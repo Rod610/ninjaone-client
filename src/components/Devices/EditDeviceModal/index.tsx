@@ -1,20 +1,29 @@
-import { FC } from "react";
+import { FC, useRef } from "react";
 
-import { useDevices } from "../../../hooks/useDevices";
-import { useModalDevice } from "../../../hooks/useModalDevice";
+import { useDeviceModals } from "../../../hooks/useDeviceModals";
 import { DeviceModalProps, IDevice, IDeviceForm } from "../../../types/devices.types";
+import { resetAbortController } from "../../../utils/abortController";
 
 import EditDeviceModalView from "./View";
 
 const EditDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
-  const { editDevice, isEditing } = useModalDevice();
-  const { refetch } = useDevices();
+  const { editDevice, isEditing } = useDeviceModals();
+
+  const editControllerRef = useRef<AbortController | null>(null);
 
   const onSubmit = async (id: string, values: IDeviceForm) => {
-    await editDevice(id, values);
-    setShow(false);
+    const controller = resetAbortController(editControllerRef);
+    try {
+      await editDevice(id, values, { signal: controller.signal }).unwrap();
+    } catch (error) {
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return;
+      }
 
-    await refetch();
+      console.error("Failed to edit device:", error);
+    } finally {
+      setShow(false);
+    }
   };
 
   const handleOnChangeField = (

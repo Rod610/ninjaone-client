@@ -5,17 +5,17 @@ import OptionsIcon from "../../../../../../assets/ActionIcons/OptionsIcon.svg?re
 
 interface ActionMenuProps {
   setDeviceId: () => void;
-  setDeleteDeviceModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditDeviceModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowDeleteDeviceModal: (value: boolean) => void;
+  setShowEditDeviceModal: (value: boolean) => void;
 }
 
-const ActionMenu: FC<ActionMenuProps> = ({ setDeviceId, setDeleteDeviceModal, setEditDeviceModal }) => {
+const ActionMenu: FC<ActionMenuProps> = ({ setDeviceId, setShowDeleteDeviceModal, setShowEditDeviceModal }) => {
   const openModal = (modalType: "edit" | "delete") => {
     setDeviceId();
     if (modalType === "edit") {
-      setEditDeviceModal(true);
+      setShowEditDeviceModal(true);
     } else if (modalType === "delete") {
-      setDeleteDeviceModal(true);
+      setShowDeleteDeviceModal(true);
     }
   };
 

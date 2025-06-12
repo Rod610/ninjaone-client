@@ -31,7 +31,7 @@ export const fetchDevices = createAsyncThunk<IDevice[], { signal?: AbortSignal }
       );
     }
   }
-);
+)
 
 export const addDevice = createAsyncThunk<void, IDeviceForm, { rejectValue: string }>(
   "device/addDevice",

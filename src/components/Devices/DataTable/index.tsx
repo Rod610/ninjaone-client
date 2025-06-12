@@ -1,6 +1,5 @@
 import { useEffect, useRef } from "react";
 
-import { DeviceModalProvider } from "../../../context/DeviceModalContext";
 import { useDevices } from "../../../hooks/useDevices";
 
 import Table from "./Table";
@@ -25,9 +24,7 @@ const DataTable = () => {
   return (
     <div>
       <TableActions refetch={refetch} />
-      <DeviceModalProvider>
         <Table devices={data} isPending={isFetching} />
-      </DeviceModalProvider>
     </div>
   );
 };

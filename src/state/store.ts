@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import devicesReducer from "./device/deviceSlice";
 import deviceDataTableReducer from "./deviceDataTable/deviceDataTableSlice";
+import deviceModalsReducer from "./deviceModals/deviceModalsSlice";
 
 export const store = configureStore({
   reducer: {
     devices: devicesReducer,
-    deviceDataTable: deviceDataTableReducer
+    deviceDataTable: deviceDataTableReducer,
+    deviceModals: deviceModalsReducer
   }
 });
 

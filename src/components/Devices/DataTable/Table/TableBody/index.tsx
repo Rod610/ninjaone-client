@@ -24,12 +24,12 @@ const DeviceIcon: FC<{ deviceType: deviceType }> = ({ deviceType }) => {
 
 type TableBodyProps = {
   devices: IDevice[];
-  getDevice: (Id: string) => void;
-  setDeleteDeviceModal: React.Dispatch<React.SetStateAction<boolean>>;
-  setEditDeviceModal: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchDevice: (id: string) => void;
+  setShowDeleteDeviceModal: (value: boolean) => void;
+  setShowEditDeviceModal: (value: boolean) => void;
 };
 
-const TableBody: FC<TableBodyProps> = ({ devices, getDevice, setDeleteDeviceModal, setEditDeviceModal }) => {
+const TableBody: FC<TableBodyProps> = ({ devices, fetchDevice, setShowDeleteDeviceModal, setShowEditDeviceModal }) => {
   return (
     <>
       {devices.map((device) => (
@@ -48,9 +48,9 @@ const TableBody: FC<TableBodyProps> = ({ devices, getDevice, setDeleteDeviceModa
 
               <div className="flex items-center">
                 <ActionMenu
-                  setDeviceId={() => getDevice(device.id)}
-                  setDeleteDeviceModal={setDeleteDeviceModal}
-                  setEditDeviceModal={setEditDeviceModal}
+                  setDeviceId={() => fetchDevice(device.id)}
+                  setShowDeleteDeviceModal={setShowDeleteDeviceModal}
+                  setShowEditDeviceModal={setShowEditDeviceModal}
                 />
               </div>
             </div>

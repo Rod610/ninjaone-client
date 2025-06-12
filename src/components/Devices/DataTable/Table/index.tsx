@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
+import { FC, useRef } from "react";
 
-import { useModalDevice } from "../../../../hooks/useModalDevice";
+import { useDeviceModals } from "../../../../hooks/useDeviceModals";
 import { IDevice } from "../../../../types/devices.types";
+import { resetAbortController } from "../../../../utils/abortController";
 import DeleteDeviceModal from "../../DeleteDeviceModal";
 import EditDeviceModal from "../../EditDeviceModal";
 
@@ -9,10 +10,22 @@ import TableBody from "./TableBody";
 import TableBodySkeleton from "./TableBodySkeleton";
 
 const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ devices = [], isPending }) => {
-  const [showDeleteDeviceModal, setDeleteDeviceModal] = useState(false);
-  const [showEditDeviceModal, setEditDeviceModal] = useState(false);
+  const {
+    device,
+    fetchDevice,
+    showEditDeviceModal,
+    showDeleteDeviceModal,
+    setShowEditDeviceModal,
+    setShowDeleteDeviceModal
+  } = useDeviceModals();
 
-  const { device, getDevice } = useModalDevice();
+  const fetchControllerRef = useRef<AbortController | null>(null);
+
+  const fetch = (id: string) => {
+    const controller = resetAbortController(fetchControllerRef);
+
+    fetchDevice(id, controller.signal);
+  };
 
   return (
     <div className="py-3">
@@ -30,20 +43,20 @@ const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ dev
           ) : (
             <TableBody
               devices={devices}
-              getDevice={getDevice}
-              setDeleteDeviceModal={setDeleteDeviceModal}
-              setEditDeviceModal={setEditDeviceModal}
+              fetchDevice={fetch}
+              setShowDeleteDeviceModal={setShowDeleteDeviceModal}
+              setShowEditDeviceModal={setShowEditDeviceModal}
             />
           )}
         </tbody>
       </table>
 
       {device ? (
-        <DeleteDeviceModal show={showDeleteDeviceModal} setShow={setDeleteDeviceModal} device={device as IDevice} />
+        <DeleteDeviceModal show={showDeleteDeviceModal} setShow={setShowDeleteDeviceModal} device={device as IDevice} />
       ) : null}
 
       {device ? (
-        <EditDeviceModal show={showEditDeviceModal} setShow={setEditDeviceModal} device={device as IDevice} />
+        <EditDeviceModal show={showEditDeviceModal} setShow={setShowEditDeviceModal} device={device as IDevice} />
       ) : null}
     </div>
   );
