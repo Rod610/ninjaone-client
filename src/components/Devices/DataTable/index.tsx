@@ -23,8 +23,8 @@ const DataTable = () => {
 
   return (
     <div>
-      <TableActions refetch={refetch} />
-        <Table devices={data} isPending={isFetching} />
+      <TableActions />
+      <Table devices={data} isPending={isFetching} />
     </div>
   );
 };

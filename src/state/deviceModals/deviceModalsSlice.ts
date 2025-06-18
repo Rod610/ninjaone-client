@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { deleteDevices, getDeviceById, putDevices } from "../../api/services/DeviceService/service";
-import { IDevice, IDeviceForm } from "../../types/devices.types";
+import { IDevice, DeviceForm } from "../../types/devices.types";
 import { fetchDevices } from "../device/deviceSlice";
 
 interface DeviceModalsState {
@@ -26,7 +26,7 @@ const initialState: DeviceModalsState = {
 
 interface IEditDeviceParams {
   id: string;
-  device: IDeviceForm;
+  device: DeviceForm;
 }
 
 export const editDevice = createAsyncThunk<void, IEditDeviceParams, { rejectValue: string }>(

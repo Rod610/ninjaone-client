@@ -3,19 +3,18 @@ import { FC } from "react";
 import LinuxIcon from "../../../../../assets/OSIcons/LinuxIcon.svg?react";
 import MacIcon from "../../../../../assets/OSIcons/MacIcon.svg?react";
 import WindowsIcon from "../../../../../assets/OSIcons/WinIcon.svg?react";
-import { DEVICES } from "../../../../../constants/devicesTypes";
-import { deviceType, IDevice } from "../../../../../types/devices.types";
+import { DeviceType, IDevice } from "../../../../../types/devices.types";
 import { capitalize } from "../../../../../utils/capitalize";
 
 import ActionMenu from "./ActionMenu";
 
-const DeviceIcon: FC<{ deviceType: deviceType }> = ({ deviceType }) => {
+const DeviceIcon: FC<{ deviceType: DeviceType }> = ({ deviceType }) => {
   switch (deviceType) {
-    case DEVICES.WINDOWS:
+    case DeviceType.Windows:
       return <WindowsIcon />;
-    case DEVICES.LINUX:
+    case DeviceType.Linux:
       return <LinuxIcon />;
-    case DEVICES.MAC:
+    case DeviceType.Mac:
       return <MacIcon />;
     default:
       return null;

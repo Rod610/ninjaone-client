@@ -1,4 +1,4 @@
-import { DeviceModalProps, IDeviceForm } from "../../../types/devices.types";
+import { DeviceForm,DeviceModalProps } from "../../../types/devices.types";
 
 export interface EditDeviceModalViewProps extends DeviceModalProps {
   isPending: boolean;
@@ -6,5 +6,5 @@ export interface EditDeviceModalViewProps extends DeviceModalProps {
     e: { name: string; value: string },
     setFieldValue: (arg0: string, arg1: string) => void
   ) => void;
-  onSubmit: (id: string, values: IDeviceForm) => void;
+  onSubmit: (id: string, values: DeviceForm) => void;
 }

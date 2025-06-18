@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 
-import { DEVICES } from "../../constants/devicesTypes";
 import {
   DEVICE_TYPE_REQUIRED,
   HDD_CAPACITY_MUST_BE_A_NUMBER,
@@ -9,14 +8,15 @@ import {
   HDD_CAPACITY_REQUIRED,
   SYSTEM_NAME_REQUIRED
 } from "../../constants/labels";
+import { DeviceType } from "../../types/devices.types";
 import { capitalize } from "../capitalize";
 
 export const DeviceFormValidationSchema = Yup.object().shape({
   system_name: Yup.string().required(SYSTEM_NAME_REQUIRED),
   type: Yup.string()
     .oneOf(
-      [DEVICES.WINDOWS, DEVICES.MAC, DEVICES.LINUX],
-      `Allowed order status [${capitalize(DEVICES.WINDOWS)}, ${capitalize(DEVICES.MAC)}, ${capitalize(DEVICES.LINUX)}]`
+      [DeviceType.Windows, DeviceType.Mac, DeviceType.Linux],
+      `Select one of these device types: ${capitalize(DeviceType.Windows)}, ${capitalize(DeviceType.Mac)} or ${capitalize(DeviceType.Linux)}`
     )
     .required(DEVICE_TYPE_REQUIRED),
   hdd_capacity: Yup.number()

@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useCallback, useRef } from "react";
 
 import { useDeviceModals } from "../../../../hooks/useDeviceModals";
 import { IDevice } from "../../../../types/devices.types";
@@ -21,11 +21,14 @@ const Table: FC<{ devices: IDevice[] | undefined; isPending: boolean }> = ({ dev
 
   const fetchControllerRef = useRef<AbortController | null>(null);
 
-  const fetch = (id: string) => {
-    const controller = resetAbortController(fetchControllerRef);
+  const fetch = useCallback(
+    (id: string) => {
+      const controller = resetAbortController(fetchControllerRef);
 
-    fetchDevice(id, controller.signal);
-  };
+      fetchDevice(id, controller.signal);
+    },
+    [fetchDevice]
+  );
 
   return (
     <div className="py-3">

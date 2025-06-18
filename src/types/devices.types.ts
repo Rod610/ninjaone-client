@@ -1,22 +1,27 @@
-export enum deviceType {
+import { IModalBase } from "./components.types";
+
+export enum DeviceType {
   Windows = "WINDOWS",
   Mac = "MAC",
   Linux = "LINUX",
-  None = ""
+  None = "NONE"
 }
 
-export type IDeviceForm = Omit<IDevice, "id">;
-export interface IDevice {
-  id: string;
+export interface BaseDevice {
   system_name: string;
-  type: deviceType;
-  hdd_capacity: string | number;
+  type: DeviceType;
+  hdd_capacity: number;
+}
+export interface IDevice extends BaseDevice {
+  id: string;
 }
 
-export interface IDevicesType {
+export type DeviceForm = BaseDevice;
+
+export interface IDevicesTypeOption {
   id: number;
   name: string;
-  value: string;
+  value: DeviceType;
 }
 
 export interface ISortOption {
@@ -29,8 +34,12 @@ export interface ISortOption {
 
 export type DeviceProperty = Pick<ISortOption, "propertyLabel" | "propertyName">;
 
-export type DeviceModalProps = {
-  show: boolean;
-  setShow: (show: boolean) => void;
-  device: IDevice;
-};
+export interface DeviceModalProps extends IModalBase {
+  device?: IDevice | null;
+}
+
+export interface DeviceDataTableState {
+  search: string;
+  deviceType: IDevicesTypeOption;
+  sortOption: ISortOption;
+}

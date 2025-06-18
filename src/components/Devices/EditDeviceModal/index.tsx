@@ -1,7 +1,7 @@
 import { FC, useRef } from "react";
 
 import { useDeviceModals } from "../../../hooks/useDeviceModals";
-import { DeviceModalProps, IDevice, IDeviceForm } from "../../../types/devices.types";
+import { DeviceForm,DeviceModalProps, IDevice } from "../../../types/devices.types";
 import { resetAbortController } from "../../../utils/abortController";
 
 import EditDeviceModalView from "./View";
@@ -11,7 +11,7 @@ const EditDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
 
   const editControllerRef = useRef<AbortController | null>(null);
 
-  const onSubmit = async (id: string, values: IDeviceForm) => {
+  const onSubmit = async (id: string, values: DeviceForm) => {
     const controller = resetAbortController(editControllerRef);
     try {
       await editDevice(id, values, { signal: controller.signal }).unwrap();

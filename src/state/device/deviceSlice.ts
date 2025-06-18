@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 import { getDevices, postDevices } from "../../api/services/DeviceService/service";
-import { IDevice, IDeviceForm } from "../../types/devices.types";
+import { IDevice, DeviceForm } from "../../types/devices.types";
 
 interface DeviceState {
   isFetching: boolean;
@@ -33,7 +33,7 @@ export const fetchDevices = createAsyncThunk<IDevice[], { signal?: AbortSignal }
   }
 )
 
-export const addDevice = createAsyncThunk<void, IDeviceForm, { rejectValue: string }>(
+export const addDevice = createAsyncThunk<void, DeviceForm, { rejectValue: string }>(
   "device/addDevice",
   async (device, { dispatch, signal }) => {
     await postDevices(device, {

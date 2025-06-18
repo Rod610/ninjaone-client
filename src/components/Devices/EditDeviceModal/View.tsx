@@ -5,7 +5,7 @@ import { Field, Form, Formik } from "formik";
 import { devicesTypesSelect } from "../../../constants/devicesTypes";
 import { deviceFields } from "../../../constants/fieldOptions";
 import { CANCEL_LABEL, EDIT_DEVICE_LABEL, SUBMIT_LABEL } from "../../../constants/labels";
-import { IDeviceForm } from "../../../types/devices.types";
+import { DeviceForm, DeviceType } from "../../../types/devices.types";
 import { capitalize } from "../../../utils/capitalize";
 import { DeviceFormValidationSchema as validationSchema } from "../../../utils/schemas/devices.schema";
 import Button from "../../shared/Button";
@@ -29,9 +29,18 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
         validationSchema={validationSchema}
         initialValues={{
           ...device,
-          hdd_capacity: device.hdd_capacity as string
+          hdd_capacity: device?.hdd_capacity ? device?.hdd_capacity.toString() : "",
+          type: device?.type || DeviceType.None
         }}
-        onSubmit={(values) => onSubmit(device.id, values)}
+        onSubmit={(values) => {
+          if (device?.id) {
+            onSubmit(device.id, {
+              ...values,
+              hdd_capacity: Number(values.hdd_capacity) as number,
+              system_name: values.system_name as string
+            });
+          }
+        }}
         enableReinitialize
       >
         {(formik) => {
@@ -53,8 +62,8 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
                           data-testid={deviceField.testId}
                           className={`bg-white border-solid outline outline-1 -outline-offset-1 outline-gray-300 text-gray-900 text-sm rounded-md block w-full p-2.5  ${
                             errors &&
-                            errors[deviceField.name as keyof IDeviceForm] &&
-                            touched[deviceField.name as keyof IDeviceForm]
+                            errors[deviceField.name as keyof DeviceForm] &&
+                            touched[deviceField.name as keyof DeviceForm]
                               ? "border-rose-500 dark:placeholder-rose-500"
                               : " border-gray-300 dark:placeholder-gray"
                           }`}
@@ -62,16 +71,16 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
                             const { name, value } = e.target;
                             handleOnChangeField({ name, value }, setFieldValue);
                           }}
-                          value={values[deviceField.name as keyof IDeviceForm] || ""}
+                          value={values[deviceField.name as keyof DeviceForm]}
                           onBlur={handleBlur}
                         />
                       ) : (
                         <SelectField
-                          value={values[deviceField.name as keyof IDeviceForm] || ""}
+                          value={values[deviceField.name as keyof DeviceForm]}
                           onChange={(e: { value: string }) => {
                             handleOnChangeField({ name: deviceField.name, value: e.value }, setFieldValue);
                           }}
-                          label={capitalize(values[deviceField.name as keyof IDeviceForm]) || "Select a type"}
+                          label={capitalize(values[deviceField.name as keyof DeviceForm] as string)}
                         >
                           {devicesTypesSelect.map((type) => (
                             <ListboxOption
@@ -87,10 +96,10 @@ const EditDeviceModalView: FC<EditDeviceModalViewProps> = ({
                         </SelectField>
                       )}
                       {errors &&
-                        errors[deviceField.name as keyof IDeviceForm] &&
-                        touched[deviceField.name as keyof IDeviceForm] && (
+                        errors[deviceField.name as keyof DeviceForm] &&
+                        touched[deviceField.name as keyof DeviceForm] && (
                           <span className="text-xs text-red-500 font-bold" data-testid={deviceField.errorTestId}>
-                            {errors[deviceField.name as keyof IDeviceForm]}
+                            {errors[deviceField.name as keyof DeviceForm]}
                           </span>
                         )}
                     </div>

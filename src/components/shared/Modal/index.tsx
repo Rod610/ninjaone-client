@@ -1,17 +1,11 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from "@headlessui/react";
 
 import CloseIcon from "../../../assets/ActionIcons/CloseIcon.svg?react";
 import { CLOSE_LABEL } from "../../../constants/labels";
+import { IModalsProps } from "../../../types/components.types";
 
-type ModalProps = {
-  show: boolean;
-  setShow: (show: boolean) => void;
-  title: string;
-  children: ReactNode;
-};
-
-const Modal: FC<ModalProps> = ({ show, setShow, title, children }) => {
+const Modal: FC<IModalsProps> = ({ show, setShow, title, children }) => {
   return (
     <Dialog open={show} onClose={() => setShow(false)} className="relative z-10 max-w-2xl">
       <DialogBackdrop

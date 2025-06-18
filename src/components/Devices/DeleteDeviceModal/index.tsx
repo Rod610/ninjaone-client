@@ -23,7 +23,9 @@ const DeleteDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
     const controller = resetAbortController(deleteControllerRef);
 
     try {
-      await deleteDevice(device.id, { signal: controller.signal });
+      if (device) {
+        await deleteDevice(device.id, { signal: controller.signal });
+      }
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {
         return;
@@ -38,7 +40,7 @@ const DeleteDeviceModal: FC<DeviceModalProps> = ({ show, setShow, device }) => {
   return (
     <Modal show={show} setShow={setShow} title={DELETE_DEVICE_LABEL}>
       <p className="text-sm">
-        {DELETE_LEGEND_LABEL_FIRST} <span className="font-medium">{device.system_name}</span>
+        {DELETE_LEGEND_LABEL_FIRST} <span className="font-medium">{device?.system_name}</span>
         {DELETE_LEGEND_LABEL_SECOND}
       </p>
 

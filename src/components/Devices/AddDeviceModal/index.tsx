@@ -1,18 +1,18 @@
 import { FC, useRef } from "react";
 
 import { useDevices } from "../../../hooks/useDevices";
-import { IDeviceForm } from "../../../types/devices.types";
+import { IModalBase } from "../../../types/components.types";
+import { DeviceForm } from "../../../types/devices.types";
 import { resetAbortController } from "../../../utils/abortController";
 
-import { AddDeviceModalProps } from "./types";
 import AddDeviceModalView from "./View";
 
-const AddDeviceModal: FC<AddDeviceModalProps> = ({ show, setShow }) => {
+const AddDeviceModal: FC<IModalBase> = ({ show, setShow }) => {
   const { isAdding: isPending, addDevice } = useDevices();
 
   const addControllerRef = useRef<AbortController | null>(null);
 
-  const onSubmit = async (values: IDeviceForm) => {
+  const onSubmit = async (values: DeviceForm) => {
     const controller = resetAbortController(addControllerRef);
 
     try {

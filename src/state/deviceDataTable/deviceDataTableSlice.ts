@@ -1,14 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { devicesTypes } from "../../constants/devicesTypes";
-import { IDevicesType, ISortOption } from "../../types/devices.types";
+import { DeviceDataTableState, IDevicesTypeOption, ISortOption } from "../../types/devices.types";
 import { generateSortOptions } from "../../utils/generateSortOptions";
-
-interface DeviceDataTableState {
-  search: string;
-  deviceType: IDevicesType;
-  sortOption: ISortOption;
-}
 
 const sortOptions = generateSortOptions();
 
@@ -25,7 +19,7 @@ const deviceDataTableSlice = createSlice({
     setSearch: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
     },
-    setDeviceType: (state, action: PayloadAction<IDevicesType>) => {
+    setDeviceType: (state, action: PayloadAction<IDevicesTypeOption>) => {
       state.deviceType = action.payload;
     },
     setSortOption: (state, action: PayloadAction<ISortOption>) => {

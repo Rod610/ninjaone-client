@@ -3,14 +3,13 @@ import { useEffect, useState } from "react";
 import SearchIcon from "../../../../../assets/ActionIcons/SearchIcon.svg?react";
 import { useDevices } from "../../../../../hooks/useDevices";
 
-
 const SearchBar = () => {
   const { setSearch } = useDevices();
 
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    const delay = 200; // 200ms delay
+    const delay = 200;
     const timeout = setTimeout(() => {
       setSearch(inputValue);
     }, delay);

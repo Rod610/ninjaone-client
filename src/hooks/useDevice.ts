@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addDevice, fetchDevices } from "../state/device/deviceSlice";
 import { AppDispatch, RootState } from "../state/store";
-import { IDeviceForm } from "../types/devices.types";
+import { DeviceForm } from "../types/devices.types";
 import { mapDevices } from "../utils/mapDevices";
 
 export const useDevice = () => {
@@ -18,7 +18,7 @@ export const useDevice = () => {
   );
 
   const add = useCallback(
-    (device: IDeviceForm, { signal }: { signal?: AbortSignal }) => dispatch(addDevice(device, { signal })),
+    (device: DeviceForm, { signal }: { signal?: AbortSignal }) => dispatch(addDevice(device, { signal })),
     [dispatch]
   );
 

@@ -5,7 +5,7 @@ import { Field, Form, Formik } from "formik";
 import { devicesTypesSelect } from "../../../constants/devicesTypes";
 import { deviceFields } from "../../../constants/fieldOptions";
 import { ADD_DEVICE_LABEL, CANCEL_LABEL, SUBMIT_LABEL } from "../../../constants/labels";
-import { deviceType, IDeviceForm } from "../../../types/devices.types";
+import { DeviceForm, DeviceType } from "../../../types/devices.types";
 import { capitalize } from "../../../utils/capitalize";
 import { DeviceFormValidationSchema as validationSchema } from "../../../utils/schemas/devices.schema";
 import Button from "../../shared/Button";
@@ -28,7 +28,7 @@ const AddDeviceModalView: FC<AddDeviceModalViewProps> = ({
         validationSchema={validationSchema}
         initialValues={{
           system_name: "",
-          type: deviceType.None,
+          type: DeviceType.None,
           hdd_capacity: ""
         }}
         onSubmit={onSubmit}
@@ -53,8 +53,8 @@ const AddDeviceModalView: FC<AddDeviceModalViewProps> = ({
                           data-testid={deviceField.testId}
                           className={`bg-white border-solid outline outline-1 -outline-offset-1 outline-gray-300 text-gray-900 text-sm rounded-md block w-full p-2.5  ${
                             errors &&
-                            errors[deviceField.name as keyof IDeviceForm] &&
-                            touched[deviceField.name as keyof IDeviceForm]
+                            errors[deviceField.name as keyof DeviceForm] &&
+                            touched[deviceField.name as keyof DeviceForm]
                               ? "border-rose-500 dark:placeholder-rose-500"
                               : " border-gray-300 dark:placeholder-gray"
                           }`}
@@ -62,16 +62,16 @@ const AddDeviceModalView: FC<AddDeviceModalViewProps> = ({
                             const { name, value } = e.target;
                             handleOnChangeField({ name, value }, setFieldValue);
                           }}
-                          value={values[deviceField.name as keyof IDeviceForm] || ""}
+                          value={values[deviceField.name as keyof DeviceForm] || ""}
                           onBlur={handleBlur}
                         />
                       ) : (
                         <SelectField
-                          value={values[deviceField.name as keyof IDeviceForm] || ""}
+                          value={values[deviceField.name as keyof DeviceForm] || ""}
                           onChange={(e: { value: string }) => {
                             handleOnChangeField({ name: deviceField.name, value: e.value }, setFieldValue);
                           }}
-                          label={capitalize(values[deviceField.name as keyof IDeviceForm]) || "Select a type"}
+                          label={capitalize(values[deviceField.name as keyof DeviceForm]) || "Select a type"}
                         >
                           {devicesTypesSelect.map((type) => (
                             <ListboxOption
@@ -87,10 +87,10 @@ const AddDeviceModalView: FC<AddDeviceModalViewProps> = ({
                         </SelectField>
                       )}
                       {errors &&
-                        errors[deviceField.name as keyof IDeviceForm] &&
-                        touched[deviceField.name as keyof IDeviceForm] && (
+                        errors[deviceField.name as keyof DeviceForm] &&
+                        touched[deviceField.name as keyof DeviceForm] && (
                           <span className="text-xs text-red-500 font-bold" data-testid={deviceField.errorTestId}>
-                            {errors[deviceField.name as keyof IDeviceForm]}
+                            {errors[deviceField.name as keyof DeviceForm]}
                           </span>
                         )}
                     </div>
@@ -113,7 +113,7 @@ const AddDeviceModalView: FC<AddDeviceModalViewProps> = ({
                     role="button"
                     name="Submit"
                     type="submit"
-                    //disabled={isPending}
+                    disabled={isPending}
                     className="text-white active:bg-cyan-800"
                   >
                     {isPending ? (

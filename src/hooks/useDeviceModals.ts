@@ -9,7 +9,7 @@ import {
   setShowEditDeviceModal
 } from "../state/deviceModals/deviceModalsSlice";
 import { AppDispatch, RootState } from "../state/store";
-import { IDeviceForm } from "../types/devices.types";
+import { DeviceForm } from "../types/devices.types";
 
 export const useDeviceModals = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -20,23 +20,21 @@ export const useDeviceModals = () => {
 
   const fetch = useCallback(
     (id: string, signal?: AbortSignal) => {
-      dispatch(fetchDevice(id, { signal }));
+      void dispatch(fetchDevice(id, { signal }));
     },
     [dispatch]
   );
 
   const edit = useCallback(
-    (id: string, device: IDeviceForm, { signal }: { signal?: AbortSignal }) =>
+    (id: string, device: DeviceForm, { signal }: { signal?: AbortSignal }) =>
       dispatch(editDevice({ id, device }, { signal })),
     [dispatch]
   );
 
   const deleteFn = useCallback(
-    (id: string, { signal }: { signal?: AbortSignal }) => dispatch(deleteDevice(id, { signal })),
+    (id: string, { signal }: { signal?: AbortSignal }) => void dispatch(deleteDevice(id, { signal })),
     [dispatch]
   );
-
-  
 
   return {
     isFetchingDevice,

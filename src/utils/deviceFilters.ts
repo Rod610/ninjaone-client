@@ -1,4 +1,4 @@
-import { IDevice } from "../types/devices.types";
+import { DeviceType, IDevice } from "../types/devices.types";
 import { IDeviceQuery } from "../types/query.types";
 
 const filterBySearch = (data: IDevice[], search: string) => {
@@ -11,7 +11,7 @@ const filterBySearch = (data: IDevice[], search: string) => {
 };
 
 const filterByType = (data: IDevice[], type: string) => {
-  return data.filter((device) => device.type === type);
+  return type === DeviceType.None ? data : data.filter((device) => device.type === type);
 };
 
 const stableSort = (array: IDevice[], comparator: (a: IDevice, b: IDevice) => number) => {
