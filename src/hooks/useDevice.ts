@@ -1,25 +1,31 @@
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useShallow } from "zustand/shallow";
 
-import { addDevice, fetchDevices } from "../state/device/deviceSlice";
-import { AppDispatch, RootState } from "../state/store";
+import { useDeviceStore } from "../state/deviceStore";
 import { DeviceForm } from "../types/devices.types";
 import { mapDevices } from "../utils/mapDevices";
 
 export const useDevice = () => {
-  const dispatch = useDispatch<AppDispatch>();
-  const { isFetching, isAdding, data } = useSelector((state: RootState) => state.devices);
+  const { isFetching, isAdding, data, fetchDevices, addDevice } = useDeviceStore(
+    useShallow((state) => ({
+      isFetching: state.isFetching,
+      isAdding: state.isAdding,
+      data: state.data,
+      fetchDevices: state.fetchDevices,
+      addDevice: state.addDevice
+    }))
+  );
 
   const refetch = useCallback(
     (signal?: AbortSignal) => {
-      dispatch(fetchDevices({ signal }));
+      fetchDevices(signal);
     },
-    [dispatch]
+    [fetchDevices]
   );
 
   const add = useCallback(
-    (device: DeviceForm, { signal }: { signal?: AbortSignal }) => dispatch(addDevice(device, { signal })),
-    [dispatch]
+    (device: DeviceForm, { signal }: { signal?: AbortSignal }) => addDevice(device, signal),
+    [addDevice]
   );
 
   return {

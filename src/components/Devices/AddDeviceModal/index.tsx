@@ -16,7 +16,7 @@ const AddDeviceModal: FC<IModalBase> = ({ show, setShow }) => {
     const controller = resetAbortController(addControllerRef);
 
     try {
-      await addDevice(values, { signal: controller.signal }).unwrap();
+      await addDevice(values, { signal: controller.signal });
       setShow(false);
     } catch (error) {
       if (error instanceof DOMException && error.name === "AbortError") {

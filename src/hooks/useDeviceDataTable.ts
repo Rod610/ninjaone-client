@@ -1,20 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useShallow } from "zustand/shallow";
 
-import { setDeviceType, setSearch, setSortOption } from "../state/deviceDataTable/deviceDataTableSlice";
-import { RootState } from "../state/store";
+import { useDeviceDataTableStore } from "../state/deviceDataTableStore";
 import { IDevicesTypeOption, ISortOption } from "../types/devices.types";
 
 export const useDeviceDataTable = () => {
-  const dispatch = useDispatch();
-
-  const { search, deviceType, sortOption } = useSelector((state: RootState) => state.deviceDataTable);
+  const { search, deviceType, sortOption, setSearch, setDeviceType, setSortOption } = useDeviceDataTableStore(useShallow(
+    (state) => ({
+      search: state.search,
+      deviceType: state.deviceType,
+      sortOption: state.sortOption,
+      setSearch: state.setSearch,
+      setDeviceType: state.setDeviceType,
+      setSortOption: state.setSortOption
+    }))
+  );
 
   return {
     search,
     deviceType,
     sortOption,
-    setSearch: (value: string) => dispatch(setSearch(value)),
-    setDeviceType: (type: IDevicesTypeOption) => dispatch(setDeviceType(type)),
-    setSortOption: (option: ISortOption) => dispatch(setSortOption(option))
+    setSearch: (value: string) => setSearch(value),
+    setDeviceType: (type: IDevicesTypeOption) => setDeviceType(type),
+    setSortOption: (option: ISortOption) => setSortOption(option)
   };
 };

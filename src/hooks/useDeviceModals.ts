@@ -1,39 +1,47 @@
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useShallow } from "zustand/shallow";
 
-import {
-  deleteDevice,
-  editDevice,
-  fetchDevice,
-  setShowDeleteDeviceModal,
-  setShowEditDeviceModal
-} from "../state/deviceModals/deviceModalsSlice";
-import { AppDispatch, RootState } from "../state/store";
+import { useDeviceModalsStore } from "../state/deviceModalsStore";
 import { DeviceForm } from "../types/devices.types";
 
 export const useDeviceModals = () => {
-  const dispatch = useDispatch<AppDispatch>();
 
-  const { isFetchingDevice, isEditing, isDeleting, device, showDeleteDeviceModal, showEditDeviceModal } = useSelector(
-    (state: RootState) => state.deviceModals
-  );
-
-  const fetch = useCallback(
-    (id: string, signal?: AbortSignal) => {
-      void dispatch(fetchDevice(id, { signal }));
-    },
-    [dispatch]
+  const {
+    isFetchingDevice,
+    isEditing,
+    isDeleting,
+    device,
+    showDeleteDeviceModal,
+    showEditDeviceModal,
+    editDevice,
+    deleteDevice,
+    setShowEditDeviceModal,
+    setShowDeleteDeviceModal
+  } = useDeviceModalsStore(
+    useShallow((state) => ({
+      isFetchingDevice: state.isFetchingDevice,
+      isEditing: state.isEditing,
+      isDeleting: state.isDeleting,
+      device: state.device,
+      showDeleteDeviceModal: state.showDeleteDeviceModal,
+      showEditDeviceModal: state.showEditDeviceModal,
+      editDevice: state.editDevice,
+      deleteDevice: state.deleteDevice,
+      setShowEditDeviceModal: state.setShowEditDeviceModal,
+      setShowDeleteDeviceModal: state.setShowDeleteDeviceModal
+    }))
   );
 
   const edit = useCallback(
-    (id: string, device: DeviceForm, { signal }: { signal?: AbortSignal }) =>
-      dispatch(editDevice({ id, device }, { signal })),
-    [dispatch]
+    (id: string, device: DeviceForm, { signal }: { signal?: AbortSignal }) => {
+      editDevice({ id, device }, signal);
+    },
+    [editDevice]
   );
 
   const deleteFn = useCallback(
-    (id: string, { signal }: { signal?: AbortSignal }) => void dispatch(deleteDevice(id, { signal })),
-    [dispatch]
+    (id: string, { signal }: { signal?: AbortSignal }) => deleteDevice(id, signal),
+    [deleteDevice]
   );
 
   return {
@@ -46,7 +54,7 @@ export const useDeviceModals = () => {
     isDeleting,
     showDeleteDeviceModal,
     showEditDeviceModal,
-    setShowEditDeviceModal: (value: boolean) => dispatch(setShowEditDeviceModal(value)),
-    setShowDeleteDeviceModal: (value: boolean) => dispatch(setShowDeleteDeviceModal(value))
+    setShowEditDeviceModal: (value: boolean) => setShowEditDeviceModal(value),
+    setShowDeleteDeviceModal: (value: boolean) => setShowDeleteDeviceModal(value)
   };
 };
